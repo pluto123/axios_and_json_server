@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>攔截器</title>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    </head>
+    <body>
+        <script>
+            // 設置請求攔截器
+            axios.interceptors.request.use(function (config) {
+                console.log('1號 - 請求攔截器_請求訊息檢驗成功');
+                // 模擬檢驗失敗
+                throw '參數異常'
+                return config;
+            }, function (error) {
+                console.log('1號 - 請求攔截器_請求訊息檢驗失敗');
+                return Promise.reject(error);
+            });
+
+            axios.interceptors.request.use(function (config) {
+                console.log('2號 - 請求攔截器_請求訊息檢驗成功');
+                return config;
+            }, function (error) {
+                console.log('2號 - 請求攔截器_請求訊息檢驗失敗');
+                return Promise.reject(error);
+            });
+
+            // 設置響應攔截器
+            axios.interceptors.response.use(function (response) {
+                console.log('1號 - 響應攔截器_請求訊息檢驗成功');
+                return response;
+            }, function (error) {
+                console.log('1號 - 響應攔截器_請求訊息檢驗失敗');
+                return Promise.reject(error);
+            });
+
+            axios.interceptors.response.use(function (response) {
+                console.log('2號 - 響應攔截器_請求訊息檢驗成功');
+                return response;
+            }, function (error) {
+                console.log('2號 - 響應攔截器_請求訊息檢驗失敗');
+                return Promise.reject(error);
+            });
+
+            // 發送請求
+            axios({
+                method: 'GET',
+                url: 'http://localhost:3000/posts'
+            }).then(response => {
+                console.log(response);
+            });
+        </script>
+    </body>
+</html>
